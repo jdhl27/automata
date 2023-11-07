@@ -1,0 +1,15 @@
+.containerAcceptance {
+  background-color: #eaf9f1;
+  padding: 5px 22px;
+  display: inline-block;
+  color: #1e9254;
+  border-radius: 19px;
+}
+
+.containerReject {
+  background-color: #ffe8e9;
+  padding: 5px 22px;
+  display: inline-block;
+  color: #ff3f48;
+  border-radius: 19px;
+}
