@@ -17,27 +17,27 @@ import { Notify } from "./components/notify";
 // Colores para los nodos de los graficos
 const colorNode = {
   border: "#000000",
-  background: "#1e9254",
+  background: "#43a26f",
   hover: {
     border: "#000000",
     background: "#9cd7ff",
   },
   highlight: {
     border: "#000000",
-    background: "#1e9254",
+    background: "#43a26f",
   },
 };
 
 const colorNodeReject = {
   border: "#000000",
-  background: "#00c3f8",
+  background: "#f26369",
   hover: {
     border: "#000000",
     background: "#9cd7ff",
   },
   highlight: {
     border: "#000000",
-    background: "#00c3f8",
+    background: "#f26369",
   },
 };
 
@@ -93,7 +93,7 @@ function App() {
     });
   };
 
-  // Crea tabla par automata
+  // Crea tabla para automata
   const createAutomata = (dataSend) => {
     let arraySymbols = dataSend?.inputSymbols?.split(",");
     let arrayStates = dataSend?.finalStates?.split(",");
@@ -156,7 +156,7 @@ function App() {
       return false; // No hay estados de aceptación definidos
     }
 
-    Notify("Revisa el automata", "error");
+    Notify("Revisa el automata porque no es AFND", "error");
     return false; // No cumple con las condiciones de ser un AFND
   };
 
@@ -209,6 +209,19 @@ function App() {
       }
     });
 
+    // Agregando estado inicial
+    nodes.push({
+      id: "Init",
+      label: "Init",
+      title: `Init`,
+      color: "#fff",
+    });
+    modifiedData.push({
+      from: "Init",
+      to: nodes[0].id,
+      label: " ",
+    });
+
     // El metodo es dinamico pero hay que especificar para que grafico son.
     if (isAFD) {
       setDataGraphAFD({ nodes, edges: modifiedData });
@@ -218,8 +231,6 @@ function App() {
   };
 
   const convertDataAFD = (afnd) => {
-    console.log("AFND: ", afnd);
-
     let alphabet = returnStateSymbols(afnd[0]);
     let afd = [];
     let cola = []; // Para procesar datos
@@ -291,8 +302,6 @@ function App() {
     setDataAFD(afd);
     // Datos para la grafica
     convertDataToGraph(afd, true);
-
-    console.log("AFD: ", afd);
   };
 
   // Eliminar comas del AFD para que los nuevos estados no queden (A,B) sino AB
@@ -363,6 +372,7 @@ function App() {
                 handleOpen();
               }}
               disabledActions={buttonDisabled}
+              isNotAction={buttonDisabled}
             />
           </Box>
           <BasicModal isOpen={open} handleClose={handleClose}>
